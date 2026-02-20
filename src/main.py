@@ -26,7 +26,7 @@ def list_images(data_dir: str) -> list[str]:
 
 def main():
     # Define where input images are stored
-    data_dir = "data"
+    data_dir = os.path.join("..", "data")
 
     # Get all image file paths
     image_paths = list_images(data_dir)
