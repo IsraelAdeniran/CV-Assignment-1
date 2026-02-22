@@ -1,5 +1,6 @@
 import os
 import cv2
+import time
 
 # Supported image file extensions
 IMAGE_EXTS = (".png", ".jpg")
@@ -59,8 +60,21 @@ def main():
 
     # Loop through every image
     for path in image_paths:
+        # Start timing
+        start_time = time.perf_counter()
+
         # Call image processing function
         process_image(path)
+
+        # Stop timing
+        end_time = time.perf_counter()
+
+        # Calculate processing time
+        processing_time = end_time - start_time
+
+        # Print processing time
+        print(f"Processing time: {processing_time:.6f} seconds")
+        print("=" * 40)
 
 
 # Run main function
