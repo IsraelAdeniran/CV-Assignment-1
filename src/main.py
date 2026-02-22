@@ -24,6 +24,34 @@ def list_images(data_dir: str) -> list[str]:
 
     return files
 
+# Convert BGR image to grayscale manually
+def convert_to_grayscale(img):
+
+    # Get image height and width
+    height, width, _ = img.shape
+
+    # Create empty grayscale image
+    gray = []
+
+    # Loop through each pixel
+    for i in range(height):
+        row = []
+        for j in range(width):
+
+            # Extract B, G, R values
+            b = img[i][j][0]
+            g = img[i][j][1]
+            r = img[i][j][2]
+
+            # Compute grayscale using weighted formula
+            intensity = int(0.299 * r + 0.587 * g + 0.114 * b)
+
+            row.append(intensity)
+
+        gray.append(row)
+
+    return gray
+
 # Process a single image
 def process_image(path: str):
     # Load image
@@ -35,13 +63,12 @@ def process_image(path: str):
         return
 
     # Convert to grayscale
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    gray = convert_to_grayscale(img)
 
     # Print image information
     print("Processing:", os.path.basename(path))
     print("Original shape (H, W, C):", img.shape)
-    print("Gray shape (H, W):", gray.shape)
-    print("Data type:", gray.dtype)
+    print("Gray shape (H, W):", (len(gray), len(gray[0])))
     print("-" * 40)
 
 def main():
