@@ -23,6 +23,26 @@ def list_images(data_dir: str) -> list[str]:
 
     return files
 
+# Process a single image
+def process_image(path: str):
+    # Load image
+    img = cv2.imread(path)
+
+    # Skip if loading failed
+    if img is None:
+        print(f"Failed to load image: {path}")
+        return
+
+    # Convert to grayscale
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    # Print image information
+    print("Processing:", os.path.basename(path))
+    print("Original shape (H, W, C):", img.shape)
+    print("Gray shape (H, W):", gray.shape)
+    print("Data type:", gray.dtype)
+    print("-" * 40)
+
 def main():
     # Define input image folder
     data_dir = os.path.join("..", "data")
@@ -39,24 +59,8 @@ def main():
 
     # Loop through every image
     for path in image_paths:
-
-        # Load image
-        img = cv2.imread(path)
-
-        # Skip if loading failed
-        if img is None:
-            print(f"Failed to load image: {path}")
-            continue
-
-        # Convert to grayscale
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-        # Print image information
-        print("Processing:", os.path.basename(path))
-        print("Original shape (H, W, C):", img.shape)
-        print("Gray shape (H, W):", gray.shape)
-        print("Data type:", gray.dtype)
-        print("-" * 40)
+        # Call image processing function
+        process_image(path)
 
 
 # Run main function
