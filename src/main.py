@@ -24,37 +24,41 @@ def list_images(data_dir: str) -> list[str]:
     return files
 
 
+
 def main():
-    # Define where input images are stored
+    # Define input image folder
     data_dir = os.path.join("..", "data")
 
-    # Get all image file paths
+    # Get all image paths
     image_paths = list_images(data_dir)
 
-    # Stop if no images are found
+    # Stop if folder is empty
     if not image_paths:
         print(f"No images found in: {data_dir}")
         return
 
-    # Select the first image for testing
-    first_path = image_paths[0]
+    print(f"Found {len(image_paths)} images.\n")
 
-    # Load the image using OpenCV (allowed)
-    img = cv2.imread(first_path)
+    # Loop through every image
+    for path in image_paths:
 
-    # Stop if image failed to load
-    if img is None:
-        print(f"Failed to load image: {first_path}")
-        return
+        # Load image
+        img = cv2.imread(path)
 
-    # Convert image to grayscale
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        # Skip if loading failed
+        if img is None:
+            print(f"Failed to load image: {path}")
+            continue
 
-    # Print basic information about the image
-    print("Loaded:", os.path.basename(first_path))
-    print("Original shape (H, W, C):", img.shape)
-    print("Gray shape (H, W):", gray.shape)
-    print("Data type:", gray.dtype)
+        # Convert to grayscale
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        # Print image information
+        print("Processing:", os.path.basename(path))
+        print("Original shape (H, W, C):", img.shape)
+        print("Gray shape (H, W):", gray.shape)
+        print("Data type:", gray.dtype)
+        print("-" * 40)
 
 
 # Run main function
