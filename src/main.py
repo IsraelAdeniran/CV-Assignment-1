@@ -18,12 +18,10 @@ def list_images(data_dir: str) -> list[str]:
             # Add full file path to list
             files.append(os.path.join(data_dir, name))
 
-    # Sort images to keep processing order consistent
-    files.sort()
+    # Sort files numerically based on the number in the filename
+    files.sort(key=lambda x: int(''.join(filter(str.isdigit, os.path.basename(x)))))
 
     return files
-
-
 
 def main():
     # Define input image folder
